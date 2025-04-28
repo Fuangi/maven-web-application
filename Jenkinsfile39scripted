@@ -1,7 +1,7 @@
 node{
-	def mavenHome = tool name: 'maven399'
+	def mavenHome = tool name: 'Maven3.9.9'
 	stage('1clone'){
-		git "https://github.com/LandmakTechnology/maven-web-application"
+		git "https://github.com/Fuangi/maven-web-application.git"
 	}
 	stage('2Test+build'){
 		sh "${mavenHome}/bin/mvn clean package"   //linux OS
@@ -15,7 +15,7 @@ node{
 	}
 	stage('5deploy2UAT'){
 		//deploy to container
-		deploy adapters: [tomcat9(credentialsId: 'tomcatAccess', path: '', url: 'http://54.234.37.143:9077/')], contextPath: null, war: 'target/*war'
+		deploy adapters: [tomcat9(credentialsId: '46995402-be84-480c-a040-4601e5ec4094', path: '', url: 'http://13.53.35.252:8080')], contextPath: null, war: 'target/*war'
 	}
 	stage('6ManualApproval'){
 		sh "echo 'please review and approve' "
@@ -26,7 +26,7 @@ node{
 	}
 	stage('7deploy2prod'){
 		//deploy to container
-		deploy adapters: [tomcat9(credentialsId: 'tomcatAccess', path: '', url: 'http://54.234.37.143:9077/')], contextPath: null, war: 'target/*war'
+		deploy adapters: [tomcat9(credentialsId: '46995402-be84-480c-a040-4601e5ec4094', path: '', url: 'http://13.53.35.252:8080')], contextPath: null, war: 'target/*war'
 	}
 	stage('8notification'){
 		emailext body: '''Hi Team,
